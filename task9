@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Variables
+
+REMOTE_USER="neo"
+REMOTE_HOST="192.168.0.177"
+PRIVATE_KEY="/home/lee/.ssh/id_rsa"
+DOCKER_IMAGE="deatend/cicd:new"
+
+# Connect to the remote server and set up the Docker container
+
+ssh -i "${PRIVATE_KEY}" "${REMOTE_USER}@${REMOTE_HOST}" "
+docker pull ${DOCKER_IMAGE} && \
+docker stop my_app_container 2>/dev/null || true && \
+docker rm my_app_container 2>/dev/null || true && \
+docker run -d --name my_app_container --restart always -p 8080:8080 ${DOCKER_IMAGE}" 
