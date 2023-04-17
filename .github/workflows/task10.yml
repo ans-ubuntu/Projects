@@ -1,0 +1,28 @@
+name: Ansible Playbook Runner
+
+on: [push]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup SSH and run Ansible playbook
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        REMOTE_HOST: user@your-remote-host.com
+      run: |
+        # Install the SSH key
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
+
+        # Add the remote host's key to the known_hosts file
+        mkdir -p ~/.ssh
+        ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
+
+        # Connect to the remote machine and run the Ansible playbook
+        scp -i private_key your-playbook.yml $REMOTE_HOST:/tmp
+        ssh -i private_key $REMOTE_HOST ansible-playbook /tmp/your-playbook.yml
