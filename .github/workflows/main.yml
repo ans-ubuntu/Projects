@@ -1,0 +1,24 @@
+name: Ansible Playbook CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  run-ansible-playbook:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Deploy webserv.go to main server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Run Ansible playbook
+      run: ansible-playbook task10.yml --become --become-user=root --extra-vars "ansible_become_pass=${{ secrets.BECOME_PASS }}"
