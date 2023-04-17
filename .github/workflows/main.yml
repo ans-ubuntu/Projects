@@ -3,7 +3,7 @@ name: Ansible Playbook CI/CD
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   run-ansible-playbook:
