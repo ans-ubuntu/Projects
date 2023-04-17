@@ -1,4 +1,4 @@
-name: Ansible Playbook Runner
+name: Run Ansible Playbook on Remote Machine
 
 on: [push]
 
@@ -10,10 +10,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup SSH and run Ansible playbook
+    - name: Execute Ansible playbook on remote machine
       env:
         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        REMOTE_HOST: user@your-remote-host.com
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST_SECRET }}
       run: |
         # Install the SSH key
         echo "$PRIVATE_KEY" > private_key
@@ -24,5 +24,6 @@ jobs:
         ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
 
         # Connect to the remote machine and run the Ansible playbook
-        scp -i private_key your-playbook.yml $REMOTE_HOST:/tmp
-        ssh -i private_key $REMOTE_HOST ansible-playbook /tmp/your-playbook.yml
+        ssh -i private_key $REMOTE_HOST ansible-playbook /home/lee/Desktop/ansible/ansible-ubuntu/task10.yml
+
+
