@@ -1,31 +1,24 @@
-name: CI/CD Pipeline
+name: Ansible Playbook Workflow
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  push: # or any other event that triggers the workflow
 
 jobs:
-  deploy:
+  run-ansible-playbook:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Set up SSH key
-      uses: webfactory/ssh-agent@v0.5.3
+    - name: Execute Ansible Playbook and run Docker image on remote VM
+      uses: appleboy/ssh-action@master
       with:
-        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        script: |
+          # Run the Ansible playbook on the remote VM
+          ansible-playbook /path/to/task10.yml
 
-    - name: Run Ansible playbook on VM
-      env:
-        VM_IP: ${{ secrets.REMOTE_HOST }}
-        USER: ${{ secrets.REMOTE_USER }}
-      run: |
-        echo "Running Ansible playbook on VM"
-        scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /path/to/playbook/task10.yml $USER@$VM_IP:/tmp
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $USER@$VM_IP "ansible-playbook /tmp/task10.yml"
+          
