@@ -27,5 +27,5 @@ jobs:
         USER: ${{ secrets.REMOTE_USER }}
       run: |
         echo "Running Ansible playbook on VM"
-        scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /path/to/playbook/task8.yml $USER@$VM_IP:/tmp
-        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $USER@$VM_IP "ansible-playbook /tmp/task8.yml"
+        scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /path/to/playbook/task10.yml $USER@$VM_IP:/tmp
+        ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $USER@$VM_IP "ansible-playbook /tmp/task10.yml"
