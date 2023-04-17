@@ -13,12 +13,12 @@ jobs:
     - name: Set up SSH key
       uses: webfactory/ssh-agent@v0.5.3
       with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        ssh-private-key: ${{ secrets.PRIVATE_KEY }}
 
     - name: Run Ansible playbook on VM
       env:
         VM_IP: ${{ secrets.REMOTE_HOST }}
-        USER: ${{ secrets.REMOTEUSER }}
+        USER: ${{ secrets.REMOTE_USER }}
       run: |
         echo "Running Ansible playbook on VM"
         scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -r /path/to/playbook/task8.yml $USER@$VM_IP:/tmp
