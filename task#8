@@ -1,0 +1,10 @@
+---
+- name: Start Go Hello World Application
+  hosts: all
+  become: yes
+  tasks:
+    - name: Start the hello-world service
+      ansible.builtin.systemd:
+        name: hello-world
+        state: started
+        enabled: yes
