@@ -1,7 +1,9 @@
 name: Ansible Playbook Workflow
 
 on:
-  push: # or any other event that triggers the workflow
+  push:
+    branches:
+      - master
 
 jobs:
   run-ansible-playbook:
