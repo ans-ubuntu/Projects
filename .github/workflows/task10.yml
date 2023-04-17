@@ -1,29 +1,24 @@
-name: Run Ansible Playbook on Remote Machine
+name: Ansible Playbook CI/CD
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  deploy:
+  run-ansible-playbook:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Execute Ansible playbook on remote machine
-      env:
-        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-        REMOTE_HOST: ${{ secrets.REMOTE_HOST_SECRET }}
-      run: |
-        # Install the SSH key
-        echo "$PRIVATE_KEY" > private_key
-        chmod 600 private_key
+    - name: Deploy webserv.go to main server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-        # Add the remote host's key to the known_hosts file
-        mkdir -p ~/.ssh
-        ssh-keyscan $REMOTE_HOST >> ~/.ssh/known_hosts
-
-        # Connect to the remote machine and run the Ansible playbook
-        ssh -i private_key $REMOTE_HOST ansible-playbook /home/lee/Desktop/ansible/ansible-ubuntu/task10.yml
-
-
+    - name: Run Ansible playbook
+      run: ansible-playbook task10.yml --become --become-user=root --extra-vars "ansible_become_pass=${{ secrets.BECOME_PASS }}"
