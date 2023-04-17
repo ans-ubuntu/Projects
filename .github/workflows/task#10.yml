@@ -19,6 +19,6 @@ jobs:
         key: ${{ secrets.PRIVATE_KEY }}
         script: |
           # Run the Ansible playbook on the remote VM
-          ansible-playbook /home/lee/Desktop/ansible/ansible-ubuntu/task10.yml
+          ansible-playbook /home/lee/Desktop/ansible/ansible-ubuntu/task8.yml
 
           
