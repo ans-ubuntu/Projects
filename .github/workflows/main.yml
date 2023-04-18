@@ -1,4 +1,4 @@
-name: Ansible Playbook CI/CD
+name: Trigger Ansible playbook on control node
 
 on:
   push:
@@ -6,19 +6,17 @@ on:
       - master
 
 jobs:
-  run-ansible-playbook:
-    runs-on: self-hosted
+  trigger:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Deploy webserv.go to main server
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.REMOTE_HOST }}
-        username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-    - name: Run Ansible playbook
-      run: ansible-playbook task10.yml --become --become-user=root --extra-vars "ansible_become_pass=${{ secrets.BECOME_PASS }}"
+    - name: Trigger Ansible playbook on control node
+      env:
+        PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      run: |
+        echo "$PRIVATE_KEY" > private_key
+        chmod 600 private_key
+        ssh -i private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ansible_user@ansible_host 'ansible-playbook /home/lee/Desktop/ansible/ansible-ubuntu/task10.yml'
