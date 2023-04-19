@@ -35,7 +35,7 @@ jobs:
       env:
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
       run: |
-        ssh-keyscan "${REMOTE_HOST}" >> ~/.ssh/known_hosts
+        ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
 
     - name: Deploy Ansible playbook
       env:
