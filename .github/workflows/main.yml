@@ -30,6 +30,12 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
+        
+    - name: Add remote server to known hosts
+      env:
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+      run: |
+        ssh-keyscan "${REMOTE_HOST}" >> ~/.ssh/known_hosts
 
     - name: Deploy Ansible playbook
       env:
