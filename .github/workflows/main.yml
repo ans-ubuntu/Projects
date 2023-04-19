@@ -37,7 +37,7 @@ jobs:
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
         
       run: |
-        ansible-playbook -i "${REMOTE_HOST}," -u "${REMOTE_USER}" --private-key private_key.pem task10.yml
+        ansible-playbook -i "${REMOTE_HOST}," -u "${REMOTE_USER}" --private-key private_key.pem task8.yml
 
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
