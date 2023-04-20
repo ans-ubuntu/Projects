@@ -23,13 +23,6 @@ jobs:
 
     - name: SSH key for remote server
       env:
-        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
-      run: |
-        echo "$PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-
-    - name: SSH key for remote server
-      env:
         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
        echo "$PRIVATE_KEY" > private_key.pem
