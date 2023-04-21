@@ -22,12 +22,14 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy Ansible playbook
-        env:
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-        run: |
-          ansible-playbook -i "${REMOTE_HOST}," -u "${REMOTE_USER}" --private-key private_key.pem task8.yml
+      - name: Deploy Ansible playbook and Docker run to remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOUT_HOST }}
+          username: ${{ secrets.REMOUT_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            ansible-playbook -i inventory.ini task8.yml
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
