@@ -1,10 +1,14 @@
 ---
-- name: Start Go Hello World Application
-  hosts: all
-  become: yes
+- name: task8.yaml
+  hosts: 178.128.83.86
+  remote_user: ans
   tasks:
-    - name: Start the Hello-World service
-      ansible.builtin.systemd:
-        name: Hi.service
-        state: started
-        enabled: yes
+    - name: Start Go Hello World Application
+      hosts: all
+      become: yes
+      tasks:
+        - name: Start the Hello-World service
+          ansible.builtin.systemd:
+            name: Hi.service
+            state: started
+            enabled: yes 
