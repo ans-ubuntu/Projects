@@ -22,7 +22,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy Ansible playbook and Docker run to remote server
+      - name: Deploy Ansible playbook to remote server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOUT_HOST }}
@@ -31,9 +31,4 @@ jobs:
           script: |
             ansible-playbook -i inventory.ini task8.yml
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.REMOTE_IMAGE }}
+     
