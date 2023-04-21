@@ -7,7 +7,7 @@
       hosts: all
       become: yes
       tasks:
-        - name: Start the Hello-World service
+        - name: Start Hi.service
           ansible.builtin.systemd:
             name: Hi.service
             state: started
