@@ -22,13 +22,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy Ansible playbook to remote server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOUT_HOST }}
-          username: ${{ secrets.REMOUT_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            ansible-playbook -i inventory.ini task8.yml
+      
 
      
