@@ -42,6 +42,11 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -73,3 +78,4 @@ jobs:
             docker stop decoder || true
             docker rm decoder || true
             docker run -d --name decoder --restart always deatend/cicd:new
+
