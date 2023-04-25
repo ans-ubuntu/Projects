@@ -9,6 +9,6 @@
   tasks:
     - name: Start the Hello World Application
       ansible.builtin.systemd:
-        name: Hi.service
+        name: hi.service
         state: started
         enabled: yes 
