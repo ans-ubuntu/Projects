@@ -1,4 +1,4 @@
-name: Deploy Decoder
+name: Deploy Docker
 
 on:
   push:
