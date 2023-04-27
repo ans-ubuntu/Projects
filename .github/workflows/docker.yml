@@ -1,4 +1,4 @@
-name: Deploy Docker container to Digital Ocean
+name: Deploy to Digital Ocean
 
 on:
   push:
@@ -13,22 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Log into Digital Ocean
-      uses: digitalocean/action-doctl@v2
+    - name: Connect to droplet
+      uses: appleboy/ssh-action@master
       with:
-        token: ${{ secrets.DO_API_KEY }}
-
-    - name: Install SSH client
-      run: sudo apt-get install -y ssh
-
-    - name: Copy SSH key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-
-    - name: Deploy Docker container
-      run: |
-        ssh -o StrictHostKeyChecking=no root@${{ secrets.REMOTE_HOST }} 'docker pull ${{ secrets.DOCKER_IMAGE }} && docker stop my-container || true && docker rm my-container || true && docker run -d --name my-container -p 80:80 my-docker-image'
-
-
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.DROPLET_PORT }}
+        script: |
+          cd /home/ans
+          docker run -d -p 8080:8080 ${{ secrets.DOCKER_IMAGE }}
