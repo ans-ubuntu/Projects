@@ -1,0 +1,25 @@
+name: Deploy Ansible, Build Docker Image, CI/CD Pipeline, and Deploy Decoder
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWD }}
+            docker pull deatend/cicd:new
+            docker stop decoder || true
+            docker rm decoder || true
+            docker run -d --name decoder --restart always deatend/cicd:new
