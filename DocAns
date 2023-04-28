@@ -1,0 +1,17 @@
+FROM python:3.9-slim
+
+RUN apt-get update && apt-get install -y \
+    ssh \
+    curl \
+    git \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install ansible
+
+WORKDIR /ansible-playbook
+
+COPY task8.yaml .
+COPY inventory.ini .
+
+CMD ["ansible-playbook", "-i", "inventory.ini", "task8.yaml"]
