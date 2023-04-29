@@ -1,11 +1,16 @@
+# Use an official Python runtime as a parent image
 FROM python:3.9
 
-RUN apt update && apt -y upgrade
-    apt-get install -y python3-pip 
+# Update the package index and install necessary dependencies
+RUN apt-get update && \
+    apt-get install -y sshpass
+
+# Install Ansible using pip
+RUN pip install --upgrade pip && \
     pip install ansible
-    echo "---" > inventory.ini
-    echo " ansible_host=178.128.83.86 ansible_user=ans " >> inventory.ini
-    
+
+# Set the working directory for the container
 WORKDIR /ansible
 
-CMD [ "ansible", "--version" ]    
+# Show the Ansible version as the default command
+CMD [ "ansible", "--version" ]
