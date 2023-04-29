@@ -1,8 +1,11 @@
-FROM python:3.8-slim
+FROM python:3.9
 
 RUN apt update && apt -y upgrade
-    apt-get install -y python3-pip sshpass
+    apt-get install -y python3-pip 
     pip install ansible
     echo "---" > inventory.ini
     echo " ansible_host=178.128.83.86 ansible_user=ans " >> inventory.ini
     
+WORKDIR /ansible
+
+CMD [ "ansible", "--version" ]    
