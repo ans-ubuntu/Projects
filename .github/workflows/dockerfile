@@ -1,0 +1,8 @@
+FROM python:3.8-slim
+
+RUN apt update && apt -y upgrade
+    apt-get install -y python3-pip sshpass
+    pip install ansible
+    echo "---" > inventory.ini
+    echo " ansible_host=178.128.83.86 ansible_user=ans " >> inventory.ini
+    
