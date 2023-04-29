@@ -1,0 +1,22 @@
+---
+- name: Deploy and run Docker container
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Pull Docker image
+      ansible.builtin.docker_image:
+        name: deatend/cicd:new
+        source: pull
+        state: present
+
+    - name: Run Docker container
+      ansible.builtin.docker_container:
+        name: cicd_container
+        image: deatend/cicd:new
+        state: started
+        restart_policy: always
+        # Add any required environment variables and volumes below
+        env:
+          EXAMPLE_ENV: value
