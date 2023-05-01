@@ -21,3 +21,14 @@ jobs:
           context: .
           push: true
           tags: deatend/ansible:img
+          
+    - name: Connect to droplet
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.DROPLET_PORT }}
+        script: |
+          cd /home/ans
+          docker run -d -p 8080:8080 deatend/ansible:img 
