@@ -18,8 +18,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v2
       with:
-          context: ./Projects
-          dockerfile: ./Projects/Docker
+          context: OlgaLeeA/Projects
+          dockerfile: OlgaLeeA/Projects/Docker
           push: true
           tags: deatend/ansible:img
           
