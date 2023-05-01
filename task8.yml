@@ -1,11 +1,8 @@
 ---
-- name: task8.yaml
-  hosts: 178.128.83.86
-  remote_user: ans
-  tasks:
-- name: Start Go Hello World Application
-  hosts: all
+- name: Start the Hello World Application
+  hosts: your_host_name_or_IP
   become: yes
+
   tasks:
     - name: Start the Hello World Application
       ansible.builtin.systemd:
