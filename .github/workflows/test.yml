@@ -19,7 +19,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
           context: .
-          dockerfile: ./Dockerfile
+          dockerfile: ./dockerfile
           push: true
           tags: deatend/ansible:img
           
