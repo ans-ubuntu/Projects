@@ -27,7 +27,7 @@ jobs:
        uses: docker/build-push-action@v4
        with:
           push: true
-          tags: deatend/ansible:1
+          tags: deatend/ansible:img
      - name: Checkout code
        uses: actions/checkout@v2
 
@@ -40,4 +40,4 @@ jobs:
         port: ${{ secrets.DROPLET_PORT }}
         script: |
           cd /home/ans
-          docker run -d -p 8080:8080 deatend/ansible:1
+          docker run -d -p 8080:8080 deatend/ansible:img
