@@ -1,11 +1,5 @@
----
-- name: Start the Hello World Application
-  hosts: 178.128.83.86
-  become: yes
+- name: Start hi.service
+  systemd:
+    name: hi.service
+    state: started
 
-  tasks:
-    - name: Start the Hello World Application
-      ansible.builtin.systemd:
-        name: hi.service
-        state: started
-        enabled: yes 
