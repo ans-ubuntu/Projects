@@ -40,4 +40,5 @@ jobs:
         port: ${{ secrets.DROPLET_PORT }}
         script: |
           cd /home/ans
-          docker run -d -p 8080:8080 deatend/ansible:img
+          docker run -it -e SSH_PRIVATE_KEY="$(cat ~/.ssh/id_rsa)" -e ANSIBLE_HOST_KEY_CHECKING=False -v /ansible/inventory.ini -v /root/.ssh/id_rsa -p 8080:8080 deatend/ansible:img
+
