@@ -1,5 +1,9 @@
 - name: Start hi.service
-  systemd:
-    name: hi.service
-    state: started
+  hosts: 178.128.83.86
+  become: true
+  tasks:
+    - name: Start systemd service
+      systemd:
+        name: hi.service
+        state: started
 
