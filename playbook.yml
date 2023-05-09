@@ -1,6 +1,6 @@
 ---
 - name: Run Docker container
-  hosts: my_host
+  hosts: 178.128.83.86
   become: yes
   vars:
     image_name: web-ui:latest
@@ -20,3 +20,4 @@
         ports:
           - "{{ host_port }}:{{ container_port }}"
         state: started
+
