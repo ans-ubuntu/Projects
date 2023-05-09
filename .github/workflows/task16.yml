@@ -22,7 +22,7 @@ jobs:
       - name: Publish to Registry
         uses: docker/build-push-action@v2
         with:
-          context: api_service/
+          context: .
           push: true
           tags: deatend/web-ui:latest
 
