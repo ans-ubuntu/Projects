@@ -1,6 +1,4 @@
-FROM golang:1.16-alpine
-
-WORKDIR /app
+FROM golang:1.18.1
 
 RUN go mod init github.com/my-web-server
 
