@@ -1,6 +1,6 @@
 ---
 - name: Run Docker container
-  hosts: all
+  hosts: 178.128.83.86
   become: yes
   vars:
     image_name: web-ui:latest
